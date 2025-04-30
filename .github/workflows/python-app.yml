@@ -36,4 +36,14 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pip install pytest pytest-cov
+        pytest --doctest-modules --junitxml=junit/test-results.xml --cov=card --cov=deck --cov=player --cov=crazyeights --cov-report=xml --cov-report=html
+    - name: Upload pytest test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-reports
+        path: |
+          htmlcov
+          coverage.xml
+        # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
