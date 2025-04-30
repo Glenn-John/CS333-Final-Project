@@ -1,7 +1,8 @@
 # Implementation of the Card class
 class Card:
     def __init__(self, v, s):
-        pass
+        self.value = v
+        self.suit = s
 
     def __str__(self):
-        pass
+        return f'{self.value} of {self.suit}'
