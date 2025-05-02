@@ -133,4 +133,17 @@ class Test_Player(unittest.TestCase):
         self.assertEqual(str(self.myplayer), mystr)
 
 class Test_CrazyEights(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.mygame = CrazyEights()
+
+    def test_constructor(self):
+        self.assertEqual(len(self.mygame.players), 2)
+        self.assertEqual(len(self.mygame.deck.stock), 52)
+
+    def test_deal_new_round(self):
+        self.mygame.deal_new_round()
+        self.mygame.deal_new_round()
+        self.assertEqual(len(self.mygame.players[0].hand), 5)
+        self.assertEqual(len(self.mygame.players[1].hand), 5)
+        self.assertEqual(len(self.mygame.deck.discard), 1)
+        self.assertEqual(len(self.mygame.deck.stock), 41)
