@@ -4,22 +4,39 @@ from deck import Deck
 
 class Player:
     def __init__(self):
-        pass
+        self.hand: list[Card] = []
+        self.points = 0
 
     def draw(self, deck: Deck):
-        pass
+        self.hand.append(deck.deal_card())
 
     def discard_hand(self):
-        pass
+        self.hand.clear()
 
     def get_hand_value(self) -> int:
-        pass
+        total = 0
+        for card in self.hand:
+            if card.value == 'Ace':
+                total += 1
+            elif card.value == 8:
+                total += 50
+            elif card.value in ['Jack', 'Queen', 'King']:
+                total += 10
+            else:
+                total += card.value
+        return total
     
     def sort_hand(self):
-        pass
+        suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+        values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King']
+        self.hand.sort(key=lambda card: (suits.index(card.suit), values.index(card.value)))
 
     def list_hand(self) -> str:
-        pass
+        self.sort_hand()
+        mystr = ''
+        for i in range(len(self.hand)):
+            mystr += f'{i+1}. {self.hand[i].value} of {self.hand[i].suit}\n'
+        return mystr
 
     def __str__(self):
-        pass
+        return f'Player with {self.points} points'

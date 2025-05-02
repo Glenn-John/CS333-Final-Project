@@ -96,6 +96,7 @@ class Test_Player(unittest.TestCase):
 
     def test_constructor(self):
         self.assertEqual(self.myplayer.hand, [])
+        self.assertEqual(self.myplayer.points, 0)
     
     def test_draw(self):
         self.myplayer.draw(self.mydeck)
