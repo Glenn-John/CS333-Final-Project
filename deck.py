@@ -10,6 +10,7 @@ class Deck:
 
     def build(self):
         self.stock.clear()
+        self.discard.clear()
         for s in ['Spades', 'Clubs', 'Diamonds', 'Hearts']:
             self.stock.append(Card('Ace', s))
             for v in range(2, 11):

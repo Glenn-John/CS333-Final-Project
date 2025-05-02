@@ -30,8 +30,11 @@ class Test_Deck(unittest.TestCase):
         self.assertEqual(len(self.mydeck.discard), 0)
 
     def test_build(self):
+        self.mydeck.stock = [Card(7, "Clubs")]
+        self.mydeck.discard = [Card(8, "Clubs")]
         self.mydeck.build()
         self.assertEqual(len(self.mydeck.stock), 52)
+        self.assertEqual(len(self.mydeck.discard), 0)
 
     def test_draw_from_full_deck(self):
         drawn_card = self.mydeck.deal_card()
