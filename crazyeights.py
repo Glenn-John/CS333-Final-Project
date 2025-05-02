@@ -4,8 +4,17 @@ from player import Player
 
 class CrazyEights:
     def __init__(self):
-        pass
+        self.players = [Player(), Player()]
+        self.deck = Deck()
 
+    def deal_new_round(self):
+        for player in self.players:
+            player.discard_hand()
+        self.deck.build()
+        for i in range(5):
+            for player in self.players:
+                player.draw(self.deck)
+        self.deck.discard_card(self.deck.deal_card())
 
     def play(self):
         # while playing:
