@@ -101,9 +101,9 @@ class Test_Player(unittest.TestCase):
     def test_draw(self):
         self.myplayer.draw(self.mydeck)
         card = self.myplayer.hand[0]
-        self.assertEqual(len(self.mydeck.cards), 51)
+        self.assertEqual(len(self.mydeck.stock), 51)
         self.assertEqual(len(self.myplayer.hand), 1)
-        self.assertNotIn(card, self.mydeck.cards)
+        self.assertNotIn(card, self.mydeck.stock)
 
     def test_discard_hand(self):
         self.myplayer.draw(self.mydeck)
