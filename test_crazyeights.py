@@ -150,3 +150,10 @@ class Test_CrazyEights(unittest.TestCase):
         self.assertEqual(len(self.mygame.players[1].hand), 5)
         self.assertEqual(len(self.mygame.deck.discard), 1)
         self.assertEqual(len(self.mygame.deck.stock), 41)
+
+    def test_change_player(self):
+        self.assertEqual(self.mygame.current_player, 0)
+        self.mygame.change_player()
+        self.assertEqual(self.mygame.current_player, 1)
+        self.mygame.change_player()
+        self.assertEqual(self.mygame.current_player, 0)
