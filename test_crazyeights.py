@@ -90,7 +90,46 @@ class Test_Deck(unittest.TestCase):
         self.assertEqual(str(self.mydeck), 'Deck containing 51 cards in the stock and 1 cards in the discard pile')
 
 class Test_Player(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.myplayer = Player()
+        self.mydeck = Deck()
+
+    def test_constructor(self):
+        self.assertEqual(self.myplayer.hand, [])
+    
+    def test_draw(self):
+        self.myplayer.draw(self.mydeck)
+        card = self.myplayer.hand[0]
+        self.assertEqual(len(self.mydeck.cards), 51)
+        self.assertEqual(len(self.myplayer.hand), 1)
+        self.assertNotIn(card, self.mydeck.cards)
+
+    def test_discard_hand(self):
+        self.myplayer.draw(self.mydeck)
+        self.myplayer.discard_hand()
+        self.assertEqual(len(self.myplayer.hand), 0)
+
+    def test_get_hand_value(self):
+        self.myplayer.hand = [Card("Ace", "Diamonds"), Card(5, "Hearts"), Card(8, "Spades"), Card("Jack", "Clubs"), Card("Queen", "Clubs"), Card("King", "Clubs")]
+        self.assertEqual(self.myplayer.get_hand_value(), 86)
+
+    def test_sort_hand(self):
+        self.myplayer.hand = [Card(7, "Spades"), Card("Ace", "Diamonds"), Card("King", "Clubs"), Card("Jack", "Hearts")]
+        self.myplayer.sort_hand()
+        self.assertEqual(self.myplayer.hand[0].suit, "Clubs")
+        self.assertEqual(self.myplayer.hand[1].suit, "Diamonds")
+        self.assertEqual(self.myplayer.hand[2].suit, "Hearts")
+        self.assertEqual(self.myplayer.hand[3].suit, "Spades")
+
+    def test_list_hand(self):
+        self.myplayer.hand = [Card(7, "Spades"), Card("Ace", "Diamonds")]
+        mystr = "1. Ace of Diamonds\n2. 7 of Spades\n"
+        self.assertEqual(self.myplayer.list_hand(), mystr)
+
+    def test_str(self):
+        self.myplayer.points = 42
+        mystr = 'Player with 42 points'
+        self.assertEqual(str(self.myplayer), mystr)
 
 class Test_CrazyEights(unittest.TestCase):
     pass

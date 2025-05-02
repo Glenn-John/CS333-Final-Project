@@ -15,5 +15,11 @@ class Player:
     def get_hand_value(self) -> int:
         pass
     
+    def sort_hand(self):
+        pass
+
+    def list_hand(self) -> str:
+        pass
+
     def __str__(self):
         pass
