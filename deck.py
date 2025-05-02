@@ -8,23 +8,41 @@ class Deck:
         self.discard: list[Card] = []
 
     def build(self):
-        pass
+        self.stock.clear()
+        for s in ['Spades', 'Clubs', 'Diamonds', 'Hearts']:
+            self.stock.append(Card('Ace', s))
+            for v in range(2, 11):
+                self.stock.append(Card(v, s))
+            self.stock.append(Card('Jack', s))
+            self.stock.append(Card('Queen', s))
+            self.stock.append(Card('King', s))
+        self.shuffle()
 
     def shuffle(self):
-        pass
+        random.shuffle(self.stock)
 
     def reshuffle(self):
-        pass
+        top_card = self.discard.pop()
+        self.stock.extend(self.discard)
+        self.discard.clear()
+        self.discard.append(top_card)
+        random.shuffle(self.stock)
 
     def deal_card(self) -> Card:
-        pass
+        if len(self.stock) == 0:
+            self.reshuffle()
+        if len(self.stock) == 0:
+            return None
+        return self.stock.pop()
 
     def discard_card(self, card: Card):
-        pass
+        self.discard.append(card)
 
     def peek_discard(self) -> Card:
-        pass
+        if len(self.discard) == 0:
+            return None
+        return self.discard[-1]
     
     def __str__(self):
-        pass
+        return f'Deck containing {len(self.stock)} cards in the stock and {len(self.discard)} cards in the discard pile'
             

@@ -68,7 +68,7 @@ class Test_Deck(unittest.TestCase):
         self.assertIn(drawn_card.value, self.valid_values)
         self.assertIn(drawn_card.suit, self.valid_suits)
 
-    def test_draw_from_empty_deck(self):
+    def test_draw_from_empty_stock(self):
         for _ in range(52):
             self.mydeck.discard_card(self.mydeck.deal_card())
         drawn_card = self.mydeck.deal_card()
@@ -76,6 +76,14 @@ class Test_Deck(unittest.TestCase):
         self.assertEqual(len(self.mydeck.discard), 1)
         self.assertIn(drawn_card.value, self.valid_values)
         self.assertIn(drawn_card.suit, self.valid_suits)
+
+    def test_draw_from_empty_deck(self):
+        self.mydeck.discard_card(self.mydeck.deal_card())
+        self.mydeck.stock.clear()
+        drawn_card = self.mydeck.deal_card()
+        self.assertEqual(len(self.mydeck.stock), 0)
+        self.assertEqual(len(self.mydeck.discard), 1)
+        self.assertIsNone(drawn_card)
 
     def test_str(self):
         self.mydeck.discard_card(self.mydeck.deal_card())
