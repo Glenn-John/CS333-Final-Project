@@ -6,6 +6,7 @@ class Deck:
     def __init__(self):
         self.stock: list[Card] = []
         self.discard: list[Card] = []
+        self.build()
 
     def build(self):
         self.stock.clear()
