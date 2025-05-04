@@ -217,7 +217,7 @@ class Test_CrazyEights(unittest.TestCase):
         self.assertFalse(self.mygame.has_valid_play())
 
     def test_select_suit(self):
-        self.assertEqual(self.mygame.select_suit(2), "Clubs")
+        self.assertEqual(self.mygame.select_suit(2), "Diamonds")
 
     def test_select_invalid_suit(self):
         self.assertIsNone(self.mygame.select_suit(0))
