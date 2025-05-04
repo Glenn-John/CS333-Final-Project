@@ -45,6 +45,33 @@ class CrazyEights:
         if i < 1 or i > 4:
             return None
         return suits[i-1]
+    
+    def handle_win(self):
+        player1 = self.players[0]
+        player2 = self.players[1]
+        winner = ""
+        # Both players have cards left, so the game ended by running out of cards
+        # Winner is the player with the lowest point hand
+        # That player gains points equal to the difference between their two hands' scores
+        if len(player1.hand) > 0 and len(player2.hand) > 0:
+            points = player1.get_hand_value() - player2.get_hand_value()
+            # if points is positive, then player2 won
+            if points > 0: 
+                player2.points += points
+                winner = "Player 2"
+            # if negative, then player1 won
+            else: 
+                player1.points -= points
+                winner = "Player 1"
+        # else, if player1 has cards left then player2 won
+        elif len(player1.hand) > 0:
+            player2.points += player1.get_hand_value()
+            winner = "Player 2"
+        # else, player1 won
+        else:
+            player1.points += player2.get_hand_value()
+            winner = "Player 1"
+        return winner
 
     def play(self):
         # while playing:
@@ -69,6 +96,7 @@ class CrazyEights:
                 if not round:
                     break
                 print("Your Hand:\n" + player.list_hand())
+                print(f"Top Card: {self.deck.peek_discard()}")
                 num_cards = len(player.hand)
                 valid_choice = False
                 while not valid_choice:
@@ -84,10 +112,15 @@ class CrazyEights:
                             played_card = player.hand.pop(choice-1)
                 self.deck.discard_card(played_card)
                 if played_card.value == 8:
-                    print(f"1. Clubs\n2. Diamonds\n3. Hearts\n4. Spades\nYou played an Eight! Choose a suit for the next play (default is {played_card.suit})")
-
-
-
-
+                    choice = int(input(f"1. Clubs\n2. Diamonds\n3. Hearts\n4. Spades\nYou played an Eight! Choose a suit for the next play (default is {played_card.suit})"))
+                    suit = self.select_suit(choice)
+                    if suit is None:
+                        suit = played_card.suit
+                    self.deck.set_top_suit(suit)
+                if len(player.hand) == 0:
+                    round = False
+                else:
+                    self.change_player()
+            winner = self.handle_win()
             choice = input("Would you like to play again? (Y/n): ")
             playing = choice.lower() == 'y'

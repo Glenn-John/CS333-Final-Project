@@ -221,3 +221,33 @@ class Test_CrazyEights(unittest.TestCase):
 
     def test_select_invalid_suit(self):
         self.assertIsNone(self.mygame.select_suit(0))
+
+    def test_player1_win_by_empty_deck(self):
+        self.mygame.players[0].hand = [Card(7, "Spades")]
+        self.mygame.players[1].hand = [Card(8, "Spades")]
+        winner = self.mygame.handle_win()
+        self.assertEqual(self.mygame.players[0].points, 43)
+        self.assertEqual(self.mygame.players[1].points, 0)
+        self.assertEqual(winner, "Player 1")
+
+    def test_player2_win_by_empty_deck(self):
+        self.mygame.players[0].hand = [Card(8, "Spades")]
+        self.mygame.players[1].hand = [Card(7, "Spades")]
+        winner = self.mygame.handle_win()
+        self.assertEqual(self.mygame.players[0].points, 0)
+        self.assertEqual(self.mygame.players[1].points, 43)
+        self.assertEqual(winner, "Player 2")
+
+    def test_player1_win_by_empty_hand(self):
+        self.mygame.players[1].hand = [Card(8, "Spades")]
+        winner = self.mygame.handle_win()
+        self.assertEqual(self.mygame.players[0].points, 50)
+        self.assertEqual(self.mygame.players[1].points, 0)
+        self.assertEqual(winner, "Player 1")
+
+    def test_player2_win_by_empty_hand(self):
+        self.mygame.players[0].hand = [Card(8, "Spades")]
+        winner = self.mygame.handle_win()
+        self.assertEqual(self.mygame.players[0].points, 0)
+        self.assertEqual(self.mygame.players[1].points, 50)
+        self.assertEqual(winner, "Player 2")
