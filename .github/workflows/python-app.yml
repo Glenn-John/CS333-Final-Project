@@ -13,8 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -47,6 +46,17 @@ jobs:
           coverage.xml
         # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
+
+  build-executable:
+    runs-on: windows-latest
+    needs: build-test
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
     - name: Install PyInstaller
       run: pip install pyinstaller
     - name: Build executable
