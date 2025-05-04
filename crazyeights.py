@@ -93,6 +93,7 @@ class CrazyEights:
             round = True
             while round:
                 player = self.get_current_player()
+                print(f"{self.current_player_str()}'s Turn")
                 while not self.has_valid_play():
                     card = player.draw(self.deck)
                     if card is None:
@@ -106,7 +107,10 @@ class CrazyEights:
                 num_cards = len(player.hand)
                 valid_choice = False
                 while not valid_choice:
-                    choice = int(input("Enter the number of the card you wish to play: "))
+                    try:
+                        choice = int(input("Enter the number of the card you wish to play: "))
+                    except ValueError:
+                        choice = -1
                     if choice < 1 or choice > num_cards:
                         print("Invalid Number")
                     else:
@@ -118,7 +122,10 @@ class CrazyEights:
                             played_card = player.hand.pop(choice-1)
                 self.deck.discard_card(played_card)
                 if played_card.value == 8:
-                    choice = int(input(f"1. Clubs\n2. Diamonds\n3. Hearts\n4. Spades\nYou played an Eight! Choose a suit for the next play (default is {played_card.suit})"))
+                    try:
+                        choice = int(input(f"1. Clubs\n2. Diamonds\n3. Hearts\n4. Spades\nYou played an Eight! Choose a suit for the next play (default is {played_card.suit}): "))
+                    except ValueError:
+                        choice = -1
                     suit = self.select_suit(choice)
                     if suit is None:
                         suit = played_card.suit
@@ -128,6 +135,6 @@ class CrazyEights:
                 else:
                     self.change_player()
             winner = self.handle_win()
-            print(self.list_points())
+            print(f"{winner} wins!\n{self.list_points()}")
             choice = input("Would you like to play again? (Y/n): ")
             playing = choice.lower() == 'y'
