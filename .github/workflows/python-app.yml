@@ -47,3 +47,14 @@ jobs:
           coverage.xml
         # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
+    - name: Install PyInstaller
+      run: pip install pyinstaller
+    - name: Build executable
+      run: |
+        pyinstaller --onefile main.py
+        ls dist
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: crazy-eights-executable
+        path: dist/main
