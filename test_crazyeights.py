@@ -128,6 +128,13 @@ class Test_Player(unittest.TestCase):
         self.assertEqual(len(self.myplayer.hand), 1)
         self.assertNotIn(card, self.mydeck.stock)
 
+    def test_draw_from_empty(self):
+        self.mydeck.discard_card(self.mydeck.deal_card())
+        self.mydeck.stock.clear()
+        drawn_card = self.myplayer.draw(self.mydeck)
+        self.assertIsNone(drawn_card)
+        self.assertEqual(len(self.myplayer.hand), 0)
+
     def test_discard_hand(self):
         self.myplayer.draw(self.mydeck)
         self.myplayer.discard_hand()

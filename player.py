@@ -8,7 +8,10 @@ class Player:
         self.points = 0
 
     def draw(self, deck: Deck):
-        self.hand.append(deck.deal_card())
+        drawn_card = deck.deal_card()
+        if drawn_card is not None:
+            self.hand.append(drawn_card)
+        return drawn_card
 
     def discard_hand(self):
         self.hand.clear()

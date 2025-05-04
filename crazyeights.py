@@ -54,7 +54,10 @@ class CrazyEights:
             round = True
             while round:
                 player = self.get_current_player()
-                print(player.list_hand())
+                while not self.has_valid_play():
+                    print("No valid cards. Drawing Card")
+                    player.draw(self.deck)
+                print("Your Hand:\n" + player.list_hand())
                 num_cards = len(player.hand)
 
 
