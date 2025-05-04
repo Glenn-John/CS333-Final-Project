@@ -68,6 +68,9 @@ class Test_Deck(unittest.TestCase):
         self.assertEqual(second_card.value, peek_card.value)
         self.assertEqual(second_card.suit, peek_card.suit)
 
+    def test_peek_empty_discard(self):
+        self.assertIsNone(self.mydeck.peek_discard())
+
     def test_reshuffle(self):
         for _ in range(52):
             self.mydeck.discard_card(self.mydeck.deal_card())
