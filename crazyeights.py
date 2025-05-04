@@ -1,4 +1,5 @@
 # Implementation of the CrazyEights class
+from card import Card
 from deck import Deck
 from player import Player
 
@@ -20,6 +21,19 @@ class CrazyEights:
     def change_player(self):
         self.current_player = (self.current_player + 1) % 2 
 
+    def get_current_player(self):
+        return self.players[self.current_player]
+    
+    def is_card_valid(self, card: Card):
+        top_card = self.deck.peek_discard()
+        if card.value == 8:
+            return True
+        if card.suit == top_card.suit:
+            return True
+        if card.value == top_card.value:
+            return True
+        return False
+
     def play(self):
         # while playing:
         #   deal a new round
@@ -31,6 +45,10 @@ class CrazyEights:
         playing = True
         while playing:
             self.deal_new_round()
+            round = True
+            while round:
+                self.get_current_player().list_hand()
+
 
 
             choice = input("Would you like to play again? (Y/n): ")

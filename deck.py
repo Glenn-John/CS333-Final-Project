@@ -6,6 +6,7 @@ class Deck:
     def __init__(self):
         self.stock: list[Card] = []
         self.discard: list[Card] = []
+        self.top_suit: str = ""
         self.build()
 
     def build(self):
@@ -39,11 +40,17 @@ class Deck:
 
     def discard_card(self, card: Card):
         self.discard.append(card)
+        self.top_suit = card.suit
 
     def peek_discard(self) -> Card:
         if len(self.discard) == 0:
             return None
-        return self.discard[-1]
+        return Card(self.discard[-1].value, self.top_suit)
+    
+    def set_top_suit(self, suit: str):
+        valid_suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+        if suit in valid_suits:
+            self.top_suit = suit
     
     def __str__(self):
         return f'Deck containing {len(self.stock)} cards in the stock and {len(self.discard)} cards in the discard pile'

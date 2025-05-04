@@ -28,6 +28,7 @@ class Test_Deck(unittest.TestCase):
     def test_constructor(self):
         self.assertEqual(len(self.mydeck.stock), 52)
         self.assertEqual(len(self.mydeck.discard), 0)
+        self.assertEqual(self.mydeck.top_suit, "")
 
     def test_build(self):
         self.mydeck.stock = [Card(7, "Clubs")]
@@ -47,6 +48,7 @@ class Test_Deck(unittest.TestCase):
         self.mydeck.discard_card(drawn_card)
         self.assertEqual(self.mydeck.discard[0].value, drawn_card.value)
         self.assertEqual(self.mydeck.discard[0].suit, drawn_card.suit)
+        self.assertEqual(self.mydeck.top_suit, drawn_card.suit)
 
     def test_peek_discard(self):
         self.mydeck.discard_card(self.mydeck.deal_card())
@@ -87,6 +89,14 @@ class Test_Deck(unittest.TestCase):
         self.assertEqual(len(self.mydeck.stock), 0)
         self.assertEqual(len(self.mydeck.discard), 1)
         self.assertIsNone(drawn_card)
+
+    def test_set_valid_suit(self):
+        self.mydeck.set_top_suit("Diamonds")
+        self.assertEqual(self.mydeck.top_suit, "Diamonds")
+
+    def test_set_invalid_suit(self):
+        self.mydeck.set_top_suit("word")
+        self.assertEqual(self.mydeck.top_suit, "")
 
     def test_str(self):
         self.mydeck.discard_card(self.mydeck.deal_card())
@@ -157,3 +167,24 @@ class Test_CrazyEights(unittest.TestCase):
         self.assertEqual(self.mygame.current_player, 1)
         self.mygame.change_player()
         self.assertEqual(self.mygame.current_player, 0)
+
+    def test_get_current_player(self):
+        self.assertEqual(self.mygame.get_current_player(), self.mygame.players[0])
+        self.mygame.change_player()
+        self.assertEqual(self.mygame.get_current_player(), self.mygame.players[1])
+
+    def test_is_8_valid(self):
+        self.mygame.deck.discard_card(Card(7, "Spades"))
+        self.assertTrue(self.mygame.is_card_valid(Card(8, "Hearts")))
+
+    def test_is_suit_valid(self):
+        self.mygame.deck.discard_card(Card(7, "Spades"))
+        self.assertTrue(self.mygame.is_card_valid(Card(9, "Spades")))
+
+    def test_is_value_valid(self):
+        self.mygame.deck.discard_card(Card(7, "Spades"))
+        self.assertTrue(self.mygame.is_card_valid(Card(7, "Clubs")))
+
+    def test_invalid_card(self):
+        self.mygame.deck.discard_card(Card(7, "Spades"))
+        self.assertFalse(self.mygame.is_card_valid(Card(9, "Hearts")))
