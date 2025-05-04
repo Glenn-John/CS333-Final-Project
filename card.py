@@ -6,3 +6,6 @@ class Card:
 
     def __str__(self):
         return f'{self.value} of {self.suit}'
+    
+    def __eq__(self, other):
+        return (self.value == other.value) and (self.suit == other.suit)

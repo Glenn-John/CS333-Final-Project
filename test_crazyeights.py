@@ -19,6 +19,16 @@ class Test_Card(unittest.TestCase):
         mycard = Card(7, "Spades")
         self.assertEqual(str(mycard), "7 of Spades")
 
+    def test_equality(self):
+        mycard = Card(7, "Spades")
+        othercard = Card(7, "Spades")
+        self.assertTrue(mycard == othercard)
+
+    def test_inequality(self):
+        mycard = Card(7, "Spades")
+        othercard = Card(8, "Diamonds")
+        self.assertFalse(mycard == othercard)
+
 class Test_Deck(unittest.TestCase):
     def setUp(self):
         self.mydeck = Deck()
