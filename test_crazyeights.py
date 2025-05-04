@@ -198,3 +198,13 @@ class Test_CrazyEights(unittest.TestCase):
     def test_invalid_card(self):
         self.mygame.deck.discard_card(Card(7, "Spades"))
         self.assertFalse(self.mygame.is_card_valid(Card(9, "Hearts")))
+
+    def test_has_valid_play(self):
+        self.mygame.get_current_player().hand = [Card(7, "Spades"), Card(2, "Hearts")]
+        self.mygame.deck.discard_card(Card(8, "Hearts"))
+        self.assertTrue(self.mygame.has_valid_play())
+
+    def test_no_valid_play(self):
+        self.mygame.get_current_player().hand = [Card(7, "Spades"), Card(2, "Hearts")]
+        self.mygame.deck.discard_card(Card(8, "Clubs"))
+        self.assertFalse(self.mygame.has_valid_play())

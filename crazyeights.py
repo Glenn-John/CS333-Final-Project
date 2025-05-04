@@ -33,6 +33,12 @@ class CrazyEights:
         if card.value == top_card.value:
             return True
         return False
+    
+    def has_valid_play(self):
+        for card in self.get_current_player().hand:
+            if self.is_card_valid(card):
+                return True
+        return False
 
     def play(self):
         # while playing:
@@ -47,7 +53,10 @@ class CrazyEights:
             self.deal_new_round()
             round = True
             while round:
-                self.get_current_player().list_hand()
+                player = self.get_current_player()
+                print(player.list_hand())
+                num_cards = len(player.hand)
+
 
 
 
