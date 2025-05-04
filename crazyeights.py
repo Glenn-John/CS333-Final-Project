@@ -24,6 +24,9 @@ class CrazyEights:
     def get_current_player(self):
         return self.players[self.current_player]
     
+    def current_player_str(self):
+        return f"Player {self.current_player+1}"
+    
     def is_card_valid(self, card: Card):
         top_card = self.deck.peek_discard()
         if card.value == 8:
@@ -125,5 +128,6 @@ class CrazyEights:
                 else:
                     self.change_player()
             winner = self.handle_win()
+            print(self.list_points())
             choice = input("Would you like to play again? (Y/n): ")
             playing = choice.lower() == 'y'

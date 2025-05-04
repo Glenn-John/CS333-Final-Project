@@ -190,6 +190,9 @@ class Test_CrazyEights(unittest.TestCase):
         self.mygame.change_player()
         self.assertEqual(self.mygame.get_current_player(), self.mygame.players[1])
 
+    def test_current_player_str(self):
+        self.assertEqual(self.mygame.current_player_str(), "Player 1")
+
     def test_is_8_valid(self):
         self.mygame.deck.discard_card(Card(7, "Spades"))
         self.assertTrue(self.mygame.is_card_valid(Card(8, "Hearts")))
