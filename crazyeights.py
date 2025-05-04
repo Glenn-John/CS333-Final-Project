@@ -72,6 +72,9 @@ class CrazyEights:
             player1.points += player2.get_hand_value()
             winner = "Player 1"
         return winner
+    
+    def list_points(self):
+        return f"Player 1: {self.players[0].points}\nPlayer 2: {self.players[1].points}\n"
 
     def play(self):
         # while playing:

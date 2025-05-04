@@ -251,3 +251,9 @@ class Test_CrazyEights(unittest.TestCase):
         self.assertEqual(self.mygame.players[0].points, 0)
         self.assertEqual(self.mygame.players[1].points, 50)
         self.assertEqual(winner, "Player 2")
+
+    def test_list_points(self):
+        self.mygame.players[0].points = 50
+        self.mygame.players[1].points = 45
+        mystr = "Player 1: 50\nPlayer 2: 45\n"
+        self.assertEqual(self.mygame.list_points(), mystr)
