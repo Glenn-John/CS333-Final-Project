@@ -215,3 +215,9 @@ class Test_CrazyEights(unittest.TestCase):
         self.mygame.get_current_player().hand = [Card(7, "Spades"), Card(2, "Hearts")]
         self.mygame.deck.discard_card(Card(8, "Clubs"))
         self.assertFalse(self.mygame.has_valid_play())
+
+    def test_select_suit(self):
+        self.assertEqual(self.mygame.select_suit(2), "Clubs")
+
+    def test_select_invalid_suit(self):
+        self.assertIsNone(self.mygame.select_suit(0))

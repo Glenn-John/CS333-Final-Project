@@ -39,6 +39,12 @@ class CrazyEights:
             if self.is_card_valid(card):
                 return True
         return False
+    
+    def select_suit(self, i):
+        suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+        if i < 1 or i > 4:
+            return None
+        return suits[i-1]
 
     def play(self):
         # while playing:
@@ -55,10 +61,30 @@ class CrazyEights:
             while round:
                 player = self.get_current_player()
                 while not self.has_valid_play():
-                    print("No valid cards. Drawing Card")
-                    player.draw(self.deck)
+                    card = player.draw(self.deck)
+                    if card is None:
+                        round = False  # if no cards are left in the deck/discard then the game is over
+                        break
+                    print(f"No valid cards. Drew {str(card)}")
+                if not round:
+                    break
                 print("Your Hand:\n" + player.list_hand())
                 num_cards = len(player.hand)
+                valid_choice = False
+                while not valid_choice:
+                    choice = int(input("Enter the number of the card you wish to play: "))
+                    if choice < 1 or choice > num_cards:
+                        print("Invalid Number")
+                    else:
+                        played_card = player.hand[choice-1]
+                        if not self.is_card_valid(played_card):
+                            print("Invalid Card")
+                        else:
+                            valid_choice = True
+                            played_card = player.hand.pop(choice-1)
+                self.deck.discard_card(played_card)
+                if played_card.value == 8:
+                    print(f"1. Clubs\n2. Diamonds\n3. Hearts\n4. Spades\nYou played an Eight! Choose a suit for the next play (default is {played_card.suit})")
 
 
 
